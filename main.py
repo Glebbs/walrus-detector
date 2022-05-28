@@ -1,40 +1,101 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter.filedialog import askdirectory
 from pathlib import Path
 
-def choose_directory():
-    ent_dir.delete(0, tk.END)
-    path_work = askdirectory(title='Выберите папку', initialdir='/')
-    ent_dir.insert(0, path_work)
+
+class MainPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent, bg='#66a5ad')
+
+        btn_choose = tk.Button(
+            self,
+            text='Выбрать папку',
+            fg='black',
+            highlightbackground='#66a5ad',
+            activeforeground='green',
+            command=self.choose_directory,
+        )
+        btn_save = tk.Button(
+            self,
+            text='Сохранить результат',
+            fg='black',
+            highlightbackground='#66a5ad',
+            activeforeground='green',
+        )
+        ent_dir = tk.Entry(
+            self,
+            highlightbackground='#66a5ad',
+            bg='#c4dfe6',
+            width=60,
+        )
+        build_dir = Path.cwd() / 'output'
+        ent_dir.insert(0, str(build_dir))
+
+        switch_window_button = tk.Button(
+            self,
+            text="Go to the Side Page",
+            command=lambda: controller.show_frame(SidePage),
+        )
+        ent_dir.pack()
+        btn_choose.pack()
+        btn_save.pack()
+        switch_window_button.pack(side="bottom", fill=tk.X)
+
+    def choose_directory(self):
+        self.ent_dir.delete(0, tk.END)
+        path_work = askdirectory(title='Выберите папку', initialdir='/')
+        self.ent_dir.insert(0, path_work)
 
 
-window = tk.Tk()
-window.config(bg='#66a5ad')
-window.geometry('600x100')
-btn_choose = tk.Button(
-    text='Выбрать папку',
-    fg='black',
-    highlightbackground='#66a5ad',
-    activeforeground='green',
-    command=choose_directory,
-)
-btn_save = tk.Button(
-    text='Сохранить результат',
-    fg='black',
-    highlightbackground='#66a5ad',
-    activeforeground='green',
-)
-ent_dir = tk.Entry(
-    highlightbackground='#66a5ad',
-    bg='#c4dfe6',
-    width=60,
-)
-build_dir = Path.cwd() / 'output'
-ent_dir.insert(0, str(build_dir))
-# ent_dir.grid(row=0, column=1, sticky='nsew', pady=5, padx=5)
-# btn_choose.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
-# btn_save.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
-ent_dir.pack()
-btn_choose.pack()
-btn_save.pack()
-window.mainloop()
+class SidePage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="This is the Side Page")
+        label.pack(padx=10, pady=10)
+
+        switch_window_button = tk.Button(
+            self,
+            text="Go to the Completion Screen",
+            command=lambda: controller.show_frame(CompletionScreen),
+        )
+        switch_window_button.pack(side="bottom", fill=tk.X)
+
+
+class CompletionScreen(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Completion Screen, we did it!")
+        label.pack(padx=10, pady=10)
+        switch_window_button = ttk.Button(
+            self, text="Return to menu", command=lambda: controller.show_frame(MainPage)
+        )
+        switch_window_button.pack(side="bottom", fill=tk.X)
+
+
+class Window(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.wm_title("Walrus detection")
+
+        container = tk.Frame(self, height=400, width=600)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        for F in (MainPage, SidePage, CompletionScreen):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(MainPage)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+if __name__ == "__main__":
+    window = Window()
+    window.mainloop()
