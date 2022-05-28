@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter.filedialog import askdirectory
-from os import getcwd
-
+from pathlib import Path
 
 def choose_directory():
     ent_dir.delete(0, tk.END)
@@ -30,7 +29,8 @@ ent_dir = tk.Entry(
     bg='#c4dfe6',
     width=60,
 )
-ent_dir.insert(0, getcwd() + r'/output')
+build_dir = Path.cwd() / 'output'
+ent_dir.insert(0, str(build_dir))
 # ent_dir.grid(row=0, column=1, sticky='nsew', pady=5, padx=5)
 # btn_choose.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
 # btn_save.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
