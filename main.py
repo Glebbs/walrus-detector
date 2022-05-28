@@ -8,7 +8,7 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='#66a5ad')
 
-        btn_choose = tk.Button(
+        self.btn_choose = tk.Button(
             self,
             text='Выбрать папку',
             fg='black',
@@ -16,31 +16,31 @@ class MainPage(tk.Frame):
             activeforeground='green',
             command=self.choose_directory,
         )
-        btn_save = tk.Button(
+        self.btn_save = tk.Button(
             self,
             text='Сохранить результат',
             fg='black',
             highlightbackground='#66a5ad',
             activeforeground='green',
         )
-        ent_dir = tk.Entry(
+        self.ent_dir = tk.Entry(
             self,
             highlightbackground='#66a5ad',
             bg='#c4dfe6',
             width=60,
         )
-        build_dir = Path.cwd() / 'output'
-        ent_dir.insert(0, str(build_dir))
+        self.build_dir = Path.cwd() / 'output'
+        self.ent_dir.insert(0, str(self.build_dir))
 
-        switch_window_button = tk.Button(
+        self.switch_window_button = tk.Button(
             self,
             text="Go to the Side Page",
             command=lambda: controller.show_frame(SidePage),
         )
-        ent_dir.pack()
-        btn_choose.pack()
-        btn_save.pack()
-        switch_window_button.pack(side="bottom", fill=tk.X)
+        self.ent_dir.pack()
+        self.btn_choose.pack()
+        self.btn_save.pack()
+        self.switch_window_button.pack(side="bottom", fill=tk.X)
 
     def choose_directory(self):
         self.ent_dir.delete(0, tk.END)
