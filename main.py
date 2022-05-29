@@ -1,8 +1,18 @@
 import tkinter as tk
 from tkinter.filedialog import askdirectory
-from os import getcwd
+from pathlib import Path
 from tkinter.font import Font
-from PIL import ImageTk
+from time import sleep
+import tkinter as tk
+from threading import Thread
+
+
+def non_gui_stuff():
+    sleep(1)
+
+
+def raise_frame(frame):
+    frame.tkraise()
 
 
 def choose_directory():
@@ -11,8 +21,30 @@ def choose_directory():
     ent_dir.insert(0, path_work)
 
 
+def choose_and_save():
+    path = askdirectory(title='Выберете папку для сохранения', initialdir=Path.home())
+    # TODO логика выгрузки
+    t = Thread(target=non_gui_stuff, daemon=True)
+    t.start()
+
+    window.withdraw()
+
+    loading_screen = tk.Toplevel(window)
+    loading_label = tk.Label(loading_screen, text="Loading")
+    loading_label.pack()
+
+    # While the thread is alive
+    while t.is_alive():
+        # Update the root so it will keep responding
+        window.update()
+
+    loading_screen.withdraw()
+    loading_screen = tk.Toplevel(loading_screen)
+    loading_label = tk.Label(loading_screen, text="Complete!")
+    loading_label.pack()
+
+
 window = tk.Tk()
-# window.config(bg='#66a5ad')
 window.geometry("1920x1080")
 
 frame1 = tk.Frame(master=window, width=450, height=100, bg="#66a5ad")
@@ -58,6 +90,7 @@ btn_save = tk.Button(
     fg='black',
     activebackground='#66a5ad',
     activeforeground='white',
+    command=choose_and_save,
 )
 ent_dir = tk.Entry(
     highlightbackground='#66a5ad',
@@ -65,10 +98,7 @@ ent_dir = tk.Entry(
     width=60,
     font="Calibri 16"
 )
-ent_dir.insert(0, getcwd() + r'\output')
-# ent_dir.grid(row=0, column=1, sticky='nsew', pady=5, padx=5)
-# btn_choose.grid(row=0, column=0, sticky='nsew', padx=5, pady=5)
-# btn_save.grid(row=1, column=0, sticky='nsew', padx=5, pady=5)
+ent_dir.insert(0, str(Path.cwd() / 'output'))
 ent_dir.place(relx=0.43, rely=0.4, height=60)
 btn_choose.place(relx=0.57, rely=0.5)
 btn_save.place(relx=0.57, rely=0.6)
