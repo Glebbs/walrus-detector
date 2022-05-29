@@ -35,7 +35,7 @@ def choose_and_save():
         loading_screen = tk.Toplevel(window, bg="#66a5ad")
         loading_screen.geometry('300x200+500+200')
 
-        loading_label = tk.Label(loading_screen, text="Loading", font=label_font, bg="#66a5ad")
+        loading_label = tk.Label(loading_screen, text="Loading...", font=label_font, bg="#66a5ad")
         loading_label.pack(expand=True)
 
         # While the thread is alive
