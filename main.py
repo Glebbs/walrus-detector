@@ -27,10 +27,12 @@ def choose_and_save():
     t.start()
 
     window.withdraw()
+    label_font = Font(family="Comic Sans MS", size=16)
+    loading_screen = tk.Toplevel(window, bg="#66a5ad")
+    loading_screen.geometry('300x200+500+200')
 
-    loading_screen = tk.Toplevel(window)
-    loading_label = tk.Label(loading_screen, text="Loading")
-    loading_label.pack()
+    loading_label = tk.Label(loading_screen, text="Loading", font=label_font, bg="#66a5ad")
+    loading_label.pack(expand=True)
 
     # While the thread is alive
     while t.is_alive():
@@ -38,9 +40,10 @@ def choose_and_save():
         window.update()
 
     loading_screen.withdraw()
-    loading_screen = tk.Toplevel(loading_screen)
-    loading_label = tk.Label(loading_screen, text="Complete!")
-    loading_label.pack()
+    loading_screen = tk.Toplevel(loading_screen, bg="#66a5ad")
+    loading_screen.geometry('300x200+500+200')
+    loading_label = tk.Label(loading_screen, text="Complete!", font=label_font, bg="#66a5ad")
+    loading_label.pack(expand=True)
 
 
 window = tk.Tk()
