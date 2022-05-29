@@ -15,35 +15,45 @@ def raise_frame(frame):
 
 
 def choose_directory():
-    ent_dir.delete(0, tk.END)
     path_work = askdirectory(title='Выберите папку', initialdir='/')
-    ent_dir.insert(0, path_work)
+    path = Path(path_work)
+    if path.is_dir():
+        ent_dir.delete(0, tk.END)
+        ent_dir.insert(0, path_work)
 
 
 def choose_and_save():
     path = askdirectory(title='Выберете папку для сохранения', initialdir=Path.home())
     # TODO логика выгрузки
-    t = Thread(target=non_gui_stuff, daemon=True)
-    t.start()
+    path = Path(path)
+    if path.is_dir() and Path(ent_dir.get()).is_dir():
+        t = Thread(target=non_gui_stuff, daemon=True)
+        t.start()
 
-    window.withdraw()
-    label_font = Font(family="Comic Sans MS", size=16)
-    loading_screen = tk.Toplevel(window, bg="#66a5ad")
-    loading_screen.geometry('300x200+500+200')
+        window.withdraw()
+        label_font = Font(family="Comic Sans MS", size=16)
+        loading_screen = tk.Toplevel(window, bg="#66a5ad")
+        loading_screen.geometry('300x200+500+200')
 
-    loading_label = tk.Label(loading_screen, text="Loading", font=label_font, bg="#66a5ad")
-    loading_label.pack(expand=True)
+        loading_label = tk.Label(loading_screen, text="Loading", font=label_font, bg="#66a5ad")
+        loading_label.pack(expand=True)
 
-    # While the thread is alive
-    while t.is_alive():
-        # Update the root so it will keep responding
-        window.update()
+        # While the thread is alive
+        while t.is_alive():
+            # Update the root so it will keep responding
+            window.update()
 
-    loading_screen.withdraw()
-    loading_screen = tk.Toplevel(loading_screen, bg="#66a5ad")
-    loading_screen.geometry('300x200+500+200')
-    loading_label = tk.Label(loading_screen, text="Complete!", font=label_font, bg="#66a5ad")
-    loading_label.pack(expand=True)
+        loading_screen.withdraw()
+        loading_screen = tk.Toplevel(loading_screen, bg="#66a5ad")
+        loading_screen.geometry('300x200+500+200')
+        loading_label = tk.Label(loading_screen, text="Complete!", font=label_font, bg="#66a5ad")
+        loading_label.pack(expand=True)
+    else:
+        error_window = tk.Tk()
+        label_font = Font(family="Comic Sans MS", size=16)
+        error_window.geometry('300x200+500+200')
+        error_label = tk.Label(error_window, text="Пути должны быть папками", font=label_font, bg="#66a5ad")
+        error_label.pack(expand=True)
 
 
 window = tk.Tk()

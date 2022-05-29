@@ -28,7 +28,3 @@ def inference(path_to_input_folder, path_to_output_folder, path_to_write_images=
         if path_to_write_images:
             cv2.imwrite(path_to_write_images + '/' + image_name, image)
         data.to_csv(path_to_output_folder + '/' + image_name.replace('.jpg', '.csv'), index=False)
-
-
-inference('C:/Users/Evgeniy/Desktop/walrus_dataset/images', 'G:/PycharmProjects/walrus-detector/csvs',
-          'G:/PycharmProjects/walrus-detector/processed_images')
