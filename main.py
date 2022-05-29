@@ -1,7 +1,8 @@
 import tkinter as tk
-from tkinter import ttk
+from time import sleep
 from tkinter.filedialog import askdirectory
 from pathlib import Path
+import threading
 
 
 class MainPage(tk.Frame):
@@ -22,6 +23,7 @@ class MainPage(tk.Frame):
             fg='black',
             highlightbackground='#66a5ad',
             activeforeground='green',
+            command=controller.calculate,
         )
         self.ent_dir = tk.Entry(
             self,
@@ -31,16 +33,9 @@ class MainPage(tk.Frame):
         )
         self.build_dir = Path.cwd() / 'output'
         self.ent_dir.insert(0, str(self.build_dir))
-
-        self.switch_window_button = tk.Button(
-            self,
-            text="Go to the Side Page",
-            command=lambda: controller.show_frame(SidePage),
-        )
         self.ent_dir.pack()
         self.btn_choose.pack()
         self.btn_save.pack()
-        self.switch_window_button.pack(side="bottom", fill=tk.X)
 
     def choose_directory(self):
         self.ent_dir.delete(0, tk.END)
@@ -48,29 +43,18 @@ class MainPage(tk.Frame):
         self.ent_dir.insert(0, path_work)
 
 
-class SidePage(tk.Frame):
+class LoadScreen(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="This is the Side Page")
+        tk.Frame.__init__(self, parent, bg='#66a5ad')
+        label = tk.Label(self, text="Schitaem pelmeni")
         label.pack(padx=10, pady=10)
 
-        switch_window_button = tk.Button(
-            self,
-            text="Go to the Completion Screen",
-            command=lambda: controller.show_frame(CompletionScreen),
-        )
-        switch_window_button.pack(side="bottom", fill=tk.X)
 
-
-class CompletionScreen(tk.Frame):
+class FinishScreen(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Completion Screen, we did it!")
+        tk.Frame.__init__(self, parent, bg='#66a5ad')
+        label = tk.Label(self, text="poschitali blya")
         label.pack(padx=10, pady=10)
-        switch_window_button = ttk.Button(
-            self, text="Return to menu", command=lambda: controller.show_frame(MainPage)
-        )
-        switch_window_button.pack(side="bottom", fill=tk.X)
 
 
 class Window(tk.Tk):
@@ -84,7 +68,7 @@ class Window(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (MainPage, SidePage, CompletionScreen):
+        for F in (MainPage, LoadScreen, FinishScreen):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -94,6 +78,14 @@ class Window(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
+    def calculate(self):
+        t = threading.Thread(target=non_gui_stuff, daemon=True)
+        t.start()
+        self.show_frame(LoadScreen)
+        while t.is_alive():
+            self.update()
+        self.show_frame(FinishScreen)
 
 
 if __name__ == "__main__":
