@@ -2,12 +2,8 @@ import tkinter as tk
 from tkinter.filedialog import askdirectory
 from pathlib import Path
 from tkinter.font import Font
-from time import sleep
 from threading import Thread
-
-
-def non_gui_stuff():
-    sleep(1)
+from reference import inference
 
 
 def raise_frame(frame):
@@ -28,9 +24,9 @@ def choose_and_save():
     path = Path(path)
     label_font = Font(family="Comic Sans MS", size=16)
     if path.is_dir() and Path(ent_dir.get()).is_dir():
-        t = Thread(target=non_gui_stuff, daemon=True)
+        t = Thread(target=inference, args=(ent_dir.get(), str(path)), daemon=True)
         t.start()
-
+        print(1)
         window.withdraw()
         loading_screen = tk.Toplevel(window, bg="#66a5ad")
         loading_screen.geometry('300x200+500+200')
