@@ -3,7 +3,6 @@ from tkinter.filedialog import askdirectory
 from pathlib import Path
 from tkinter.font import Font
 from time import sleep
-import tkinter as tk
 from threading import Thread
 
 
