@@ -26,12 +26,12 @@ def choose_and_save():
     path = askdirectory(title='Выберете папку для сохранения', initialdir=Path.home())
     # TODO логика выгрузки
     path = Path(path)
+    label_font = Font(family="Comic Sans MS", size=16)
     if path.is_dir() and Path(ent_dir.get()).is_dir():
         t = Thread(target=non_gui_stuff, daemon=True)
         t.start()
 
         window.withdraw()
-        label_font = Font(family="Comic Sans MS", size=16)
         loading_screen = tk.Toplevel(window, bg="#66a5ad")
         loading_screen.geometry('300x200+500+200')
 
@@ -50,9 +50,9 @@ def choose_and_save():
         loading_label.pack(expand=True)
     else:
         error_window = tk.Tk()
-        label_font = Font(family="Comic Sans MS", size=16)
+        error_window.configure(bg="#66a5ad")
         error_window.geometry('300x200+500+200')
-        error_label = tk.Label(error_window, text="Пути должны быть папками", font=label_font, bg="#66a5ad")
+        error_label = tk.Label(error_window, text="Путь указан неверно", font=label_font, bg="#66a5ad")
         error_label.pack(expand=True)
 
 
