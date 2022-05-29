@@ -5,10 +5,6 @@ from pathlib import Path
 import threading
 
 
-def non_gui_stuff():
-    sleep(3)
-
-
 class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg='#66a5ad')
