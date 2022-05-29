@@ -4,7 +4,7 @@ import tqdm
 import glob
 import cv2
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt',device='cpu').to('cpu')
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', device='cpu').to('cpu')
 
 
 def inference(path_to_input_folder, path_to_output_folder, path_to_write_images=None):
