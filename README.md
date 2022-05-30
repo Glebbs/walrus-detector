@@ -16,7 +16,7 @@
 ---
 ## Сборка ##
 1. Установить python3.9, скачать можно [тут](https://www.python.org/downloads/)
-2. Склонировать проект `git clone http... walrus && cd walrus`
+2. Склонировать проект `git clone https://github.com/qvntz/walrus-detector.git walrus && cd walrus`
 3. Установить зависимости `pip install -r requirements.txt`
 4. Скачать и переместить в корневую папку веса https://drive.google.com/file/d/11ltQ3723Y8E8OdLlkpADapGPLUpDVAm9/view?usp=sharing
 5. Запустить проект `python main.py`
