@@ -1,11 +1,11 @@
 # Walrus detector
 
-## Содержание
-1. [Задача](#задача)
-2. [Сборка](#сборка)
-
+## Content
+1. [Task](#task)
+2. [Assembling](#assembling)
+3. [Usage](#usage)
 ---
-## Задача ##
+## Task ##
 Отслеживание популяции ненецких моржей происходит путем 
 съемки особей с беспилотника и последующим их ручным подсчетом
 по фото. Это занимает большое количество человеко-ресурсов. 
@@ -14,20 +14,19 @@
 
 
 ---
-## Сборка ##
-1. Установить python3.9, скачать можно [тут](https://www.python.org/downloads/)
-2. Склонировать проект `git clone https://github.com/qvntz/walrus-detector.git walrus && cd walrus`
-3. Установить зависимости `pip install -r requirements.txt`
-4. Скачать и переместить в корневую папку веса https://drive.google.com/file/d/11ltQ3723Y8E8OdLlkpADapGPLUpDVAm9/view?usp=sharing
-5. Запустить проект `python main.py`
+## Assembling ##
+1. Install python3.9, [link](https://www.python.org/downloads/)
+2. Clone project `git clone https://github.com/qvntz/walrus-detector.git walrus && cd walrus`
+3. Install dependencies `pip install -r requirements.txt`
+4. Download weights into root directory https://drive.google.com/file/d/11ltQ3723Y8E8OdLlkpADapGPLUpDVAm9/view?usp=sharing
+5. Launch `python main.py`
 
 ---
 
-## Использование ##
+## Usage ##
 
 ![Header](https://github.com/qvntz/walrus-detector/blob/main/image_2022-05-29_05-41-15.png)
 
-1. Нажать выбрать папку и указать, где лежат фотографии, которые нужно обработать
-2. Нажать "сохранить результат" и выбрать директорию, куда сохранить резултат
-3. Чуть-чуть подождать
-4. Радоваться :)
+1. Choose a folder with images to process
+2. Click "сохранить результат" and choose path to save processed images
+3. Wait a while
