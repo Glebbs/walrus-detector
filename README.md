@@ -6,12 +6,10 @@
 3. [Usage](#usage)
 ---
 ## Task ##
-Отслеживание популяции ненецких моржей происходит путем 
-съемки особей с беспилотника и последующим их ручным подсчетом
-по фото. Это занимает большое количество человеко-ресурсов. 
-Необходимо реализовать алгоритм автоматического подсчета моржей
-по фотографии.
-
+The Nenets walrus population is tracked by
+taking pictures of individuals with a drone and their 
+subsequent manual counting. It takes a lot of human resources.
+Here we provide an algorithm for automatically counting.
 
 ---
 ## Assembling ##
