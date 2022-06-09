@@ -11,7 +11,7 @@ def raise_frame(frame):
 
 
 def choose_directory():
-    path_work = askdirectory(title='Выберите папку', initialdir='/')
+    path_work = askdirectory(title='Choose directory', initialdir='/')
     path = Path(path_work)
     if path.is_dir():
         ent_dir.delete(0, tk.END)
@@ -19,8 +19,7 @@ def choose_directory():
 
 
 def choose_and_save():
-    path = askdirectory(title='Выберете папку для сохранения', initialdir=Path.home())
-    # TODO логика выгрузки
+    path = askdirectory(title='C', initialdir=Path.home())
     path = Path(path)
     label_font = Font(family="Comic Sans MS", size=16)
     if path.is_dir() and Path(ent_dir.get()).is_dir():
@@ -48,7 +47,7 @@ def choose_and_save():
         error_window = tk.Tk()
         error_window.configure(bg="#66a5ad")
         error_window.geometry('300x200+500+200')
-        error_label = tk.Label(error_window, text="Путь указан неверно", font=label_font, bg="#66a5ad")
+        error_label = tk.Label(error_window, text="Wrong path", font=label_font, bg="#66a5ad")
         error_label.pack(expand=True)
 
 
@@ -73,14 +72,14 @@ myFont = Font(family="Comic Sans MS", size=64)
 lable.configure(font=myFont)
 lable.place(relx=0.43, rely=0.1)
 
-lable2 = tk.Label(text='Путь к папке с фотографиями:',
+lable2 = tk.Label(text='Path to the directory with pictures:',
                   bg='white', )
 myFont = Font(family="Comic Sans MS", size=16)
 lable2.configure(font=myFont)
 lable2.place(relx=0.43, rely=0.35)
 
 btn_choose = tk.Button(
-    text='Выбрать папку',
+    text='Choose directory',
     font="Calibri 14",
     height=1,
     width=30,
@@ -91,7 +90,7 @@ btn_choose = tk.Button(
     command=choose_directory,
 )
 btn_save = tk.Button(
-    text='Сохранить результат',
+    text='Save result',
     font="Calibri 14",
     height=1,
     width=30,
