@@ -28,5 +28,5 @@ Here we provide an algorithm for automatically counting.
 ## Usage ##
 ![Header](https://github.com/Glebbs/walrus-detector/blob/main/assets/photo_2022-06-09_16-15-10.jpg)
 1. Choose a folder with images to process
-2. Click "сохранить результат" and choose path to save processed images
+2. Click "Save result" and choose path to save processed images
 3. Wait a while
